@@ -1,0 +1,46 @@
+GlowScript 2.7 VPython
+#five magents
+
+def f(x):
+    return 1.10e-4 / (x*x)-0.040
+    
+mg = 0.005*9.8
+dmax = 0.027
+init = 0.005
+min = 100
+inc = 0.001
+xsol = 5
+ysol = 5
+zsol = 5
+zzsol = 5
+error = 100
+x = init
+while x<dmax:
+    print("x = ", x)
+    y=init
+    while y <dmax:
+        print("y = ",y)
+        z=init
+        while z<dmax:
+            print("z = ",z)
+            zz=init
+            while zz<dmax:
+                
+                a = f(x) + f(y+z) - f(y) - mg - f(y+z+zz)
+                b = f(z+zz) + f(y) - f(x+y) - f(z) - mg
+                c = f(z) + f(x+y+z) - f(y+z) - mg - f(zz)
+                d = f(y+z+zz) + f(zz) - f(z+zz) - f(x+y+z+zz) - mg 
+                error = abs(a) + abs(b) + abs(c) + abs(d)
+                print (x,y,z,error)
+                if error<min:
+                    min = error
+                    xsol = x
+                    ysol = y
+                    zsol = z
+                    zzsol = zz
+                zz = zz + inc
+            z = z + inc
+        y = y + inc
+    x = x + inc
+
+print ("w(m) = ", xsol, "   x(m) = ", ysol, "   y(m) = ", zsol, "   z(m) = ", zzsol, "  error = ", error)
